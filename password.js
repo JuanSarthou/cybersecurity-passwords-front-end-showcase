@@ -1,7 +1,9 @@
 // Toggle the menu open/closed when clicking the toggle button.
 document.getElementById("menuToggle").addEventListener("click", function() {
   const menu = document.querySelector(".menu");
+  const main = document.querySelector("main");
   menu.classList.toggle("closed");
+  main.classList.toggle("menu-open");
 
   // Change the button icon: "☰" when closed, "X" when open.
   if (menu.classList.contains("closed")) {
@@ -58,7 +60,6 @@ function generatePassword() {
   // Assuming a brute-force rate of 1e9 (1 billion) guesses per second,
   // which is roughly the performance of a high-end machine or a specialized attack setup.
   const poolSize = allChars.length;
-  // Use logarithms to compute the magnitude:
   const logYears = length * Math.log10(poolSize) - 9 - Math.log10(3.154e7);
   let estimatedYears = Math.pow(10, logYears);
   
