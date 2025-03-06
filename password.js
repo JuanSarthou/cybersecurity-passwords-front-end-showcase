@@ -1,4 +1,17 @@
-// Listen for clicks on the "Generate Password" and "Copy" buttons.
+// Toggle the menu open/closed when clicking the toggle button.
+document.getElementById("menuToggle").addEventListener("click", function() {
+  const menu = document.querySelector(".menu");
+  menu.classList.toggle("closed");
+
+  // Change the button icon: "☰" when closed, "X" when open.
+  if (menu.classList.contains("closed")) {
+    this.innerText = "☰";
+  } else {
+    this.innerText = "X";
+  }
+});
+
+// Listen for clicks on "Generate Password" and "Copy" buttons.
 document.getElementById("generateBtn").addEventListener("click", generatePassword);
 document.getElementById("copyBtn").addEventListener("click", copyPassword);
 
@@ -42,19 +55,25 @@ function generatePassword() {
 
   // Calculate the estimated cracking time.
   // Total combinations = (pool size)^(password length).
-  // Here the pool size is the length of allChars.
+  // Assuming a brute-force rate of 1e9 (1 billion) guesses per second,
+  // which is roughly the performance of a high-end machine or a specialized attack setup.
   const poolSize = allChars.length;
-  // Assume a brute-force rate of 1e9 (1 billion) guesses per second.
-  // To avoid overflow, we use logarithms:
-  // log10(years) = length * log10(poolSize) - 9 - log10(3.154e7)
+  // Use logarithms to compute the magnitude:
   const logYears = length * Math.log10(poolSize) - 9 - Math.log10(3.154e7);
   let estimatedYears = Math.pow(10, logYears);
   
-  // Convert the result into a human-friendly string.
+  // Format the estimated time into a human-friendly string.
   let timeString = formatTime(estimatedYears);
-  
+
+  // Update the cracking time display.
   document.getElementById("estimateText").innerText =
     "Estimated cracking time (assuming 1 billion attempts/sec): " + timeString;
+
+  // Add an explanation of what "1 billion attempts/sec" means.
+  document.getElementById("explanationText").innerText =
+    "This estimate assumes an attacker using a high-performance system capable of trying 1 billion password guesses every second – " +
+    "a speed achievable by specialized hardware or coordinated botnets. For context, a password that would take " +
+    timeString + " to crack is effectively unbreakable by brute force with current technology.";
 }
 
 function copyPassword() {
@@ -71,7 +90,7 @@ function copyPassword() {
 }
 
 function formatTime(years) {
-  // If the estimated time is less than 1 year, convert to a smaller unit.
+  // Convert the estimated time to a friendly string.
   if (years < 1) {
     const seconds = years * 3.154e7;
     if (seconds < 60) {
@@ -83,10 +102,11 @@ function formatTime(years) {
     } else {
       return (seconds / 86400).toFixed(2) + " days";
     }
-  } else if (years < 1000) {
+  } else if (years < 1e6) {
     return years.toFixed(2) + " years";
   } else {
-    // For very large values, use scientific notation.
-    return years.toExponential(2) + " years";
+    // For large values, display in millions of years.
+    const millionYears = years / 1e6;
+    return millionYears.toFixed(2) + " million years";
   }
 }
