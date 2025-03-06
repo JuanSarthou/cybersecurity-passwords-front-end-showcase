@@ -12,6 +12,20 @@ body {
   color: #333;
 }
 
+/* Toggle Button Styling */
+.menu-toggle {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1001; /* Ensure it's above other elements */
+  background-color: #27ae60;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
 /* Fixed Navigation Menu */
 .menu {
   position: fixed;
@@ -19,8 +33,13 @@ body {
   left: 0;
   width: 200px;
   height: 100%;
-  background-color: #2c3e50; /* Dark gray/blue */
+  background-color: #2c3e50;
   padding: 20px;
+  transition: left 0.3s ease;
+}
+
+.menu.closed {
+  left: -220px; /* Move the menu off-screen when closed */
 }
 
 .menu ul {
@@ -32,24 +51,25 @@ body {
 }
 
 .menu a {
-  color: #ecf0f1; /* Light gray */
+  color: #ecf0f1;
   text-decoration: none;
   font-weight: bold;
 }
 
 .menu a:hover {
-  color: #27ae60; /* Green accent */
+  color: #27ae60;
 }
 
 /* Main Content Area */
 main {
-  margin-left: 220px; /* Space to accommodate the fixed menu */
+  margin-left: 220px; /* Leave room for the menu */
   padding: 20px;
+  transition: margin-left 0.3s ease;
 }
 
 /* Headings */
 h2 {
-  color: #27ae60; /* Green accent for headings */
+  color: #27ae60;
   margin-bottom: 10px;
 }
 
