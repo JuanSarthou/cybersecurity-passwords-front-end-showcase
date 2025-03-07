@@ -1,15 +1,19 @@
 // Toggle the menu open/closed when clicking the toggle button.
 // Toggle the menu open/closed when clicking the toggle button.
+
 document.getElementById("menuToggle").addEventListener("click", function() {
   const menu = document.querySelector(".menu");
   menu.classList.toggle("closed");
 
+  // Change the button icon: "☰" when closed, "X" when open.
   if (menu.classList.contains("closed")) {
     this.innerText = "☰";
   } else {
     this.innerText = "X";
   }
 });
+
+
 
 // (Rest of your password generation code remains unchanged)
 
