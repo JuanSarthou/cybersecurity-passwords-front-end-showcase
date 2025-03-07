@@ -1,9 +1,9 @@
 // Toggle the menu open/closed when clicking the toggle button.
-// Toggle the menu open/closed when clicking the toggle button.
-
 document.getElementById("menuToggle").addEventListener("click", function() {
   const menu = document.querySelector(".menu");
+  const main = document.querySelector("main");
   menu.classList.toggle("closed");
+  main.classList.toggle("menu-open");
 
   // Change the button icon: "☰" when closed, "X" when open.
   if (menu.classList.contains("closed")) {
@@ -12,11 +12,6 @@ document.getElementById("menuToggle").addEventListener("click", function() {
     this.innerText = "X";
   }
 });
-
-
-
-// (Rest of your password generation code remains unchanged)
-
 
 // Listen for clicks on "Generate Password" and "Copy" buttons.
 document.getElementById("generateBtn").addEventListener("click", generatePassword);
@@ -31,8 +26,8 @@ function generatePassword() {
   }
 
   // Define the character sets.
-  const lower = "abcdefghijklmnñopqrstuvwxyz";
-  const upper = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+  const lower = "abcdefghijklmnopqrstuvwxyz";
+  const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const digits = "0123456789";
   const symbols = "!@#$%^&*()-_=+[]{}|;:,.<>/?";
 
@@ -60,6 +55,27 @@ function generatePassword() {
   const password = passwordArray.join('');
   document.getElementById("passwordOutput").value = password;
 
+  // Calculate the estimated cracking time.
+  // Total combinations = (pool size)^(password length).
+  // Assuming a brute-force rate of 1e9 (1 billion) guesses per second,
+  // which is roughly the performance of a high-end machine or a specialized attack setup.
+  const poolSize = allChars.length;
+  const logYears = length * Math.log10(poolSize) - 9 - Math.log10(3.154e7);
+  let estimatedYears = Math.pow(10, logYears);
+  
+  // Format the estimated time into a human-friendly string.
+  let timeString = formatTime(estimatedYears);
+
+  // Update the cracking time display.
+  document.getElementById("estimateText").innerText =
+    "Estimated cracking time (assuming 1 billion attempts/sec): " + timeString;
+
+  // Add an explanation of what "1 billion attempts/sec" means.
+  document.getElementById("explanationText").innerText =
+    "This estimate assumes an attacker using a high-performance system capable of trying 1 billion password guesses every second – " +
+    "a speed achievable by specialized hardware or coordinated botnets. For context, a password that would take " +
+    timeString + " to crack is effectively unbreakable by brute force with current technology.";
+}
 
 function copyPassword() {
   const passwordField = document.getElementById("passwordOutput");
