@@ -18,7 +18,7 @@ body {
   top: 10px;
   left: 10px;
   z-index: 1001; /* Above the menu */
-  background-color: #27ae60;
+  background-color: #607d8b;
   color: #fff;
   border: none;
   padding: 10px;
@@ -58,7 +58,7 @@ body {
 }
 
 .menu a:hover {
-  color: #27ae60;
+  color: #607d8b;
 }
 
 /* Main Content Area */
@@ -70,7 +70,7 @@ main {
 
 /* Headings */
 h2, h3 {
-  color: #27ae60;
+  color: #607d8b;
   margin-bottom: 10px;
 }
 
